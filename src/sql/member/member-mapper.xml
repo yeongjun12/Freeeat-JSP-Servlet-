@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+
+<properties>
+	<entry key="selectListCount">
+	SELECT 
+		COUNT(*)
+	FROM 
+		QNA
+	</entry>
+	<entry key="selectCsList">
+ SELECT 
+        	* 
+	FROM (
+	        SELECT  
+	                ROWNUM RNUM, Q.*
+	        FROM(
+	                SELECT 
+	                        QNA_NO, 
+	                        IS_LOCKED, 
+	                        QNA_CATEGORY, 
+	                        QNA_TITLE, 
+	                        QNA_WRITER, 
+	                        QNA_DATE, 
+	                        QNA_Q, 
+	                        QNA_A, 
+	                        ANS_YN,
+	                        ANS_DATE,
+	                        QNA_PWD,
+	                        QNA_EMAIL
+	                FROM 
+	                    QNA
+	                ORDER 
+	                    BY 
+	                       QNA_DATE DESC )Q
+	                       )A
+	WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
+	<entry key="insertCs">
+     INSERT 
+        INTO 
+            QNA
+            (
+            QNA_NO,
+            QNA_CATEGORY,
+            QNA_TITLE,
+            QNA_WRITER,
+            QNA_DATE,
+            QNA_Q,
+            ANS_YN,
+            IS_LOCKED,
+            QNA_PWD,
+            QNA_EMAIL
+            )
+    VALUES
+            (
+            SEQ_QNO.NEXTVAL,
+            ?,
+            ?,
+            ?,
+            SYSDATE,
+            ?,
+            'N',
+            NVL(?, 'N'),
+            ?,
+            ?
+            ) 
+	
+	
+	</entry>
+	
+	<entry key = "loginMember">
+		SELECT
+		       MEM_NO,
+		       MEM_ID,
+		       MEM_PWD,
+		       MEM_NICKNAME,
+		       MEM_PHONE,
+		       MEM_BIRTH,
+		       MEM_EMAIL,
+		       MEM_TYPE,
+		       MEM_RESIDENCE,
+		       MEM_ENROLLDATE,
+		       MEM_STATUS,
+		       MEM_PROFILE_OG,
+		       MEM_PROFILE_REVISE,
+		       MEM_PROFILE_SAVEPATH
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_ID = ?
+		   AND 
+		       MEM_PWD = ?
+		   AND
+		       MEM_STATUS = 'Y'
+		       
+		
+	
+	
+	
+	</entry>
+	
+	<entry key="insertMember">
+	INSERT
+    INTO
+       MEMBER
+            (
+            MEM_NO,
+            MEM_ID,
+            MEM_NICKNAME,
+            MEM_PWD,
+            MEM_PHONE,
+            MEM_BIRTH,
+            MEM_EMAIL,
+            MEM_TYPE,
+            MEM_RESIDENCE
+            )
+    VALUES
+            (
+            SEQ_MNO.NEXTVAL,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?
+            
+            )
+
+	</entry>
+	
+	<entry key="updateMember">
+	 UPDATE
+	        MEMBER
+ 	  SET
+	       MEM_NICKNAME = ?,
+	       MEM_PHONE = ?,
+	       MEM_PWD = ?,
+	       MEM_EMAIL = ?,
+	       MEM_TYPE = ?,
+	       MEM_PROFILE_OG = ?,
+		   MEM_PROFILE_REVISE = ?,
+           MEM_PROFILE_SAVEPATH = ?
+		       
+	 WHERE 
+	       MEM_ID = ? AND MEM_STATUS = 'Y'
+	</entry>
+	<entry key="selectMember">
+		SELECT
+		       MEM_NO,
+		       MEM_ID,
+		       MEM_PWD,
+		       MEM_NICKNAME,
+		       MEM_PHONE,
+		       MEM_BIRTH,
+		       MEM_EMAIL,
+		       MEM_TYPE,
+		       MEM_RESIDENCE,
+		       MEM_ENROLLDATE,
+		       MEM_STATUS,
+		       MEM_PROFILE_OG,
+		       MEM_PROFILE_REVISE,
+		       MEM_PROFILE_SAVEPATH
+		      
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_ID = ?
+	</entry>
+	
+	<entry key="deleteMember">
+		UPDATE
+			   MEMBER
+		   SET 
+		       MEM_STATUS = 'N'
+		 WHERE
+		       MEM_ID = ?
+		   
+	</entry>
+	
+		<entry key="selectMemberListCount">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       MEMBER
+		 WHERE
+		       MEM_STATUS = 'Y'
+	</entry>
+	<entry key="selectMemberList">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       MEM_NO,
+		                       MEM_ID,
+		                       MEM_NICKNAME,
+		                       MEM_PHONE,
+		                       MEM_BIRTH,
+		                       MEM_EMAIL,
+		                       MEM_TYPE,
+		                       MEM_RESIDENCE,
+		                       MEM_ENROLLDATE,
+		                       MEM_STATUS
+		                  FROM 
+		                       MEMBER
+		                 WHERE
+		                       MEM_STATUS = 'Y'
+		                 ORDER 
+		                    BY 
+		                       MEM_NO ASC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMemberNListCount">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       MEMBER
+	</entry>
+	<entry key="selectMemberNList">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       MEM_NO,
+		                       MEM_ID,
+		                       MEM_NICKNAME,
+		                       MEM_PHONE,
+		                       MEM_BIRTH,
+		                       MEM_EMAIL,
+		                       MEM_TYPE,
+		                       MEM_RESIDENCE,
+		                       MEM_ENROLLDATE,
+		                       MEM_STATUS
+		                  FROM 
+		                       MEMBER
+		                 ORDER 
+		                    BY 
+		                       MEM_NO ASC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectTypeValues">
+		SELECT
+		       MEM_TYPE
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_STATUS = 'Y'
+	</entry>
+	<entry key="selectResidenceValues">
+		SELECT
+		       COUNT(*),
+		       MEM_RESIDENCE
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_STATUS = 'Y'
+		 GROUP 
+		    BY
+		       MEM_RESIDENCE
+	</entry>
+	<entry key="selectAgeValues">
+		SELECT 
+		       "연령",
+		       SUM("인원") 합계
+		  FROM 
+		       (
+		       SELECT 
+		              "나이",
+		              COUNT("나이") 인원,
+		         CASE 
+		              WHEN "나이" BETWEEN 0 AND 19 THEN '10대'
+		              WHEN "나이" BETWEEN 20 AND 29 THEN '20대'
+		              WHEN "나이" BETWEEN 30 AND 39 THEN '30대'
+		              WHEN "나이" BETWEEN 40 AND 49 THEN '40대'
+		              WHEN "나이" BETWEEN 50 AND 59 THEN '50대'
+		              WHEN "나이" >= 60 THEN '60대 이상'
+		          END "연령"
+		         FROM 
+		              (
+		              SELECT 
+		                     (TO_CHAR(SYSDATE, 'YYYY') - (19 || SUBSTR(MEM_BIRTH,0,2)) + 1) "나이"
+		                FROM
+		                     MEMBER
+		              )
+		        GROUP
+		           BY
+		              "나이"
+		        )
+		 GROUP
+		    BY
+		       "연령"
+	</entry>
+	<entry key="idCheck">
+		SELECT 
+		      COUNT(*) 
+		FROM 
+			MEMBER 
+		WHERE 
+			MEM_ID = ?
+	</entry>
+	
+	<entry key="nickNameCheck">
+		SELECT 
+				COUNT(*) 
+		FROM 
+			MEMBER 
+		WHERE 
+			MEM_NICKNAME = ?
+	</entry>
+	<entry key="selectMemEnrollDate">
+		SELECT 
+		       MEM_ENROLLDATE, 
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 GROUP 
+		    BY
+		       MEM_ENROLLDATE
+		HAVING
+		       MEM_ENROLLDATE BETWEEN ? AND (TO_DATE(?,'yyyy-mm-dd') + 6)
+		 ORDER
+		    BY
+		       MEM_ENROLLDATE
+	</entry>
+</properties>

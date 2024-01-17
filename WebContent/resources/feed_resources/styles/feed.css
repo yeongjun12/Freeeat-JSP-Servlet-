@@ -1,0 +1,908 @@
+
+article {
+  position: relative;
+  right: 0px;
+  border-radius: 3px;
+}
+
+.main_body {
+  display: flex;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  left: 20px;
+  margin-top: 50px;
+}
+
+.feed {
+  width: 600px;
+  height: auto;
+  margin-top: 20px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+}
+
+.story {
+  height: 117px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+aside {
+  position: relative;
+  left: 0px;
+  right: 100px;
+  top: 10px;
+}
+
+.feed_left_container {
+  position: sticky;
+  width: 450px;
+  top: 0px;
+  right: 100px;
+}
+/* .feed_left_container_i */
+#feed_logo{
+  width: 400px;
+  height: 400px;
+}
+
+.my_profile {
+  display: flex;
+  height: 95px;
+  margin: 20px;
+  background-color: #fafafa;
+  border-radius: 50%;
+}
+
+.empty_box {
+  height: 26px;
+}
+
+.text {
+  position: relative;
+  top: 11px;
+}
+
+.feed {
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+.feed_id {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 83px;
+  background-color: #e7f8ff9a;
+}
+
+.id_round {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  top: 15px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  border-radius: 50%;
+}
+
+.id_box {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  left: 0px;
+  top: 0px;
+  width: 530px;
+  height: 50px;
+}
+
+.id_container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  left: 10px;
+}
+
+.id_img {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+}
+
+.id_name {
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feed_title {
+  font-size: 12px;
+}
+
+.more_details {
+  position: relative;
+  right: -535px;
+  margin-top: 20px;
+}
+
+.more_details img {
+  display: flex !important;
+  justify-content: flex-end !important;
+  width: 45px !important;
+  height: 45px !important;
+}
+
+.feed_picture {
+  width: 598px;
+  height: 598px;
+}
+
+.feed_picture img {
+  width: 598px  !important;
+  height: 598px !important;
+}
+
+.emoticon_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin: 0px;
+  background-color: #e7f8ff9a;
+}
+
+.emoticon_box2 {
+  display: flex;
+}
+
+.emoticon_box2 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  margin: 0px;
+}
+
+.emoticon_box2 img {
+  width: 24px  !important;
+  height: 24px !important;
+}
+
+.bookmark_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+
+}
+
+.bookmark_box img {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.feed_like_box {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  left: 8px;
+  padding: 0 16px 0 8px;
+}
+
+.feed_like_box .feed_like {
+  display: flex;
+  position: relative;
+  left: 5px;
+  font-size: 14px;
+}
+
+.feed_like_picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 15px;
+  left: 10px;
+  border: 1px solid #dbdbdb;
+}
+
+.feed_like_peolpe {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.feed_article {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.feed_article_box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 0 16px 0 16px;
+}
+
+.comments_container {
+  display: flex;
+}
+
+.comments {
+  font-size: 14px;
+  line-height: 18px;
+  padding: 2px;
+}
+
+.comments1 {
+  padding: 2px;
+  font-size: 14px;
+  line-height: 18px;
+  color: #8e8e8e;
+}
+
+.comments1_box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+
+}
+
+.new_comments {
+  display: block;
+  text-align: start;
+}
+
+.newCommentBox {
+  padding: 2px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.newCommentBox1 {
+  padding: 2px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+
+.comments2 {
+  font-size: 10px;
+  line-height: 18px;
+  color: #8e8e8e;
+  letter-spacing: 0.2px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 12px 0 12px;
+  margin: 0px;
+  border-top: 1px solid #efefef;
+}
+
+.inputBox {
+  background-color: #FAFAFA;
+  font: 14px;
+  color: black;
+  outline: none;
+  width: 550px;
+  height: 50px;
+  border: solid 0px;
+}
+
+.buttonBox {
+  background-color: white;
+  color: #b1d6f8;
+  outline: none;
+  border: solid 0px;
+}
+.buttonBox:hover{
+  font-weight: bold;
+  background-color: rgba(54, 53, 53, 0.124);
+  color: #0095F6;
+}
+.gogo{
+  color: #04303f !important;
+  font-weight: bold !important;
+}
+
+.type_comment {
+  display: flex;
+  justify-content: flex-start;
+  width: 530px;
+  font-size: 14px;
+  color: #8e8e8e;
+}
+
+.my_profile_box1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  background-size: contain;
+  flex-direction: column;
+}
+
+.my_profile_box1 img {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+}
+
+.my_profile_id {
+  margin-left: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.my_profile_id1 {
+  /* border: 1px solid blue; */
+  margin-left: 10px;
+}
+
+.my_profile_id2 {
+  /* border: 1px solid blue; */
+  margin-left: 10px;
+}
+
+.allorfollow {
+  display: flex;
+  /* border: 1px solid pink; */
+  align-items: center;
+  position: relative;
+  top: 7px;
+  left: 30px;
+  margin-left: 70px;
+}
+
+.other_box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* border:1px solid red; */
+  position: relative;
+  left: 75px;
+  top: -20px;
+  margin-top: 20px;
+}
+
+.span1 {
+  font-size: 11px;
+  color: #c7c7c7
+}
+
+.recommendation_box {
+  margin: 10px 120px 10px 40px;
+}
+
+.comment {
+  font-size: 12px;
+  color: #262626;
+  font-weight: 600;
+}
+
+.my_profile_main_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  /* border:1px solid black; */
+  width: 63%;
+}
+
+.my_profile_id_box {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.my_profile_id1 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.my_profile_id2 {
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.btn_category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+  height: 55px;
+  flex-direction: column;
+}
+
+.btn_category img {
+  width: 40px  !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+}
+
+.users {
+  display: flex;
+  /* border: 1px solid paleturquoise; */
+  margin-top: 20px;
+  height: 290px;
+  flex-direction: column;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 48px;
+  margin: 5px 0 0 40px;
+
+}
+
+.user_box {
+  height: 50%;
+}
+
+.follow {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0095F6;
+}
+
+.recommendation {
+  font-size: 14px;
+  color: #8e8e8e;
+}
+
+.btn {
+  /*<!-- 모든 버튼에대한 css설정 -->*/
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px 10px 20px;
+  margin: 20px;
+  display: inline-block;
+  border-radius: 10px;
+  transition: all 0.1s;
+  text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
+
+}
+
+.btn:active {
+  transform: translateY(3px);
+}
+
+.btn.blue {
+  background-color: #1f75d9;
+  border-bottom: 5px solid #165195;
+}
+#red_btn, #red_btn2{
+  background-color: red;
+  color: white;
+  margin-bottom: 31110px;
+}
+
+.btn.blue:active {
+  border-bottom: 2px solid #165195;
+}
+
+
+
+.custom-btn {
+  /* 상단버튼 스타일 */
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'S-CoreDream-3Light';
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  outline: none;
+}
+
+/* 13 */
+.btn-13 {
+  background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  border: none;
+  z-index: 1;
+}
+
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: #4dccc6;
+  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+  box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+
+.btn-13:hover {
+  color: #fff;
+}
+
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+
+.btn-13:active {
+  top: 2px;
+}
+
+
+/* 14 */
+.btn-14 {
+  background: rgb(255, 151, 0);
+  border: none;
+  z-index: 1;
+}
+
+.btn-14:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: #eaf818;
+  background-image: linear-gradient(315deg, #eaf818 0%, #f6fc9c 74%);
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5);
+  /* 7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1); */
+  transition: all 0.3s ease;
+}
+
+.btn-14:hover {
+  color: #000;
+}
+
+.btn-14:hover:after {
+  top: auto;
+  bottom: 0;
+  height: 100%;
+}
+
+.btn-14:active {
+  top: 2px;
+}
+
+/* 15 */
+.btn-15 {
+  background: #d6f2fec6;
+  border: none;
+  border-radius: 15px;
+  z-index: 1;
+  color: #165195;  
+
+}
+
+.btn-15:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #43ff3d;
+  border-radius: 15px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  transition: all 0.3s ease;
+}
+
+.btn-15:hover {
+  color: #fff;
+}
+
+.btn-15:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.btn-15:active {
+  top: 2px;
+}
+.btn-16{
+  background-color: palegreen;
+  color: purple;
+  font-weight: bold;
+}
+
+.select_btn_group {
+  margin-top: 0px;
+  padding-top: 100px;
+}
+.select_btn_group_button{
+  margin-bottom: 20px;
+}
+#legend_reason{
+}
+.insert_feed_box {
+  /* 피드등록버튼 div*/
+  padding: 10px;
+}
+
+#insert_feed {
+  height: 100px;
+  background-color: #C8E183;
+  width: 200px;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.mouse_scroll {
+  margin-top: 20px;
+  width: 40px;
+}
+
+.tag_boxes {
+  margin: 1px;
+  margin-top: 3px;
+  padding-left: 10px;
+}
+
+.tag {
+  margin-left: 5px;
+  width: 115px;
+  height: 25px;
+  background: #23849c;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  line-height: 25px;
+}
+
+.more_buttons {
+  margin-top: 10px;
+  display: none;
+}
+
+.more_button {
+  width: max-content
+}
+
+.more_button {
+  background: #d6f2fec6;
+  border: none;
+  border-radius: 15px;
+  z-index: 1;
+  color: #165195;
+  margin-bottom: 3px;
+}
+
+.more_button:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #4fe34945;
+  border-radius: 15px;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  transition: all 0.3s ease;
+}
+
+.more_button:hover {
+  color: #fff;
+}
+
+.more_button:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+/* .more_button:active {
+  top: 2px;
+} */
+
+
+/* 신고하기 모달창!!!!!!!! */
+.modal_wrap{ /* 신고하기 */
+  display: none;
+  width: 600px;
+  height: 885px;
+  top: 33%;
+  left: 50%;
+  margin: -250px 0 0 -250px;
+  border-radius: 40px;
+
+  background-color: rgb(253, 219, 219);
+  position: fixed;
+  transform: translate(0%, 0%);
+  z-index: 1000;
+}
+
+.black_bg, .black_bg2 {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 300%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.modal_close, .modal_close2 {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: -30px;
+  right: 0;
+  z-index: 4;
+}
+
+.modal_close>a, .modal_close2>a {
+  display: block  !important;  
+  width: 100% !important;
+  height: 100% !important;
+  background: url(https://img.icons8.com/metro/26/000000/close-window.png) !important;
+  text-indent: -9999px !important;
+  z-index: 4 !important;
+}
+#s123{
+ height: 10px;
+ width: 10px;
+}
+/* 모달 내부 div */
+#report_modal_title, #feed_modal_title{
+  font-size: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#modal_inside{
+  /* border: 1px solid red; */
+  margin: 20px;
+  margin-top: 30px;
+}
+.report_modal_btns{
+  text-align: center;
+  width: 560px;
+  height: 0px;
+  left: 0px;
+  bottom: 0px;
+}
+.report_modal{
+  background-color: white !important;
+}
+.reported_nickname{
+  display: block;
+}
+.reported_textarea{
+  width: 530px;
+}
+.report_reason_input_box{
+  margin: 0px;
+}
+.report_reason_input_box input{
+  margin: 10px;
+}
+#etc_reason_text{
+  width: 530px;
+  height: 80px;
+  resize:none
+}
+
+/* 모달 내부 div 끝 */
+/* 신고하기 모달창!  끝!! */
+/* ----------------------------------------------- */
+
+/* 피드등록 모달창 시작! */
+
+
+#feed_wrap{ /* 피드등록하기*/ 
+  display: none;
+  width: 800px;
+  height: 885px;
+  top: 38%;
+  left: 45%;
+  right: 50%;
+  margin: -250px 0 0 -250px;
+  border-radius: 40px;
+     
+  background-color: #E7F8FF;
+  position: fixed;
+  transform: translate(0%, 0%);
+  z-index: 1000;
+} 
+
+#modal_inside2 {
+  margin: 20px;
+  margin-top: 30px;
+  box-sizing : border-box;
+}
+#empty_p{
+  height: 10px;
+  margin-bottom: 20px;
+}
+/* -------------------------------------- */
+/* 피드 모달창 내부 */
+.titleImg_class1{
+  text-align: center;
+}
+.titleImg_class1_1{
+  text-align: center;
+
+}
+#feed_insert_title{
+  height: 36px;
+  width:550px;
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+#feed_content{
+  margin-top: 10px;
+}
+#feed_insert_table{
+  line-height: 40px;
+}
+#feed_tag{
+  margin-top: 20px;
+}
+.titleImg_class{
+
+}
+
+
+
+
+
+
+
+/* 피드등록 모달창 끝! */
+
+
+/* ------------------------------------------------------------- */
+

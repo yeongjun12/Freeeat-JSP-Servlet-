@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<!-- 혜진 검색 시작 -->
+	<entry key="selectListCount">
+	SELECT 
+		COUNT(*)
+	FROM 
+		PLACE
+	WHERE 
+		PLACE_STATUS = 'Y'
+	AND 
+       DECODE(?, 1, PLACE_ADDRESS, 2, PLACE_TYPE, 3, PLACE_KIND, 4, PLACE_NAME)                        
+       LIKE ?
+		
+	</entry>
+	
+	<entry key="selectList">
+ SELECT *
+    FROM( 
+        SELECT 
+                ROWNUM RNUM,
+                A.* 
+        FROM(
+            SELECT 	
+                P.*,
+                ( SELECT 
+                        COUNT(*) 
+                    FROM 
+                        WISH
+                    JOIN 
+                        PLACE USING(PLACE_NO)
+                    WHERE 
+                        PLACE_NO = P.PLACE_NO) WISHCOUNT,
+                (SELECT 
+                       ROUND(AVG(REVIEW_COUNT))
+                     FROM 
+                          REVIEW
+                     WHERE 
+                          PLACE_NO = P.PLACE_NO) GRADE,
+                (SELECT 
+                       COUNT(*) REVIEWCOUNT
+                     FROM 
+                          REVIEW
+                     WHERE 
+                          PLACE_NO = P.PLACE_NO) REVIEWCOUNT
+        FROM 
+            (SELECT 
+                    PLACE_NO,
+                    SUBSTR(PLACE_ADDRESS, 1, 2) PLACE_ADDRESS,
+                    PLACE_NAME,
+                    FILE_PATH || '/' || CHANGE_NAME TITLEIMG,
+                    PLACE_TYPE
+                FROM 
+                    PLACE
+                LEFT JOIN 
+                         PLA_PHOTO USING(PLACE_NO)
+                WHERE 
+                    DECODE(?, 1, PLACE_ADDRESS, 2, PLACE_TYPE, 3, PLACE_KIND, 4, PLACE_NAME)                        
+                    LIKE ?
+                 AND 
+                    PLACE_STATUS = 'Y') P
+                ORDER
+                     BY 
+                        DECODE(?, 'GRADE', GRADE, 'REVIEWCOUNT',REVIEWCOUNT, 'WISHCOUNT', WISHCOUNT)  DESC)A
+                        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectRecentList">
+	SELECT 
+        PLACE_NO,
+        SUBSTR(PLACE_ADDRESS, 1, 2) PLACE_ADDRESS,
+        PLACE_NAME,
+        (SELECT 
+                ROUND(AVG(REVIEW_COUNT))
+         FROM 
+              REVIEW
+         WHERE 
+              PLACE_NO = PLACE_NO) GRADE,
+         FILE_PATH || '/' || CHANGE_NAME TITLEIMG
+	FROM 
+	    RECENT
+	JOIN 
+	    PLACE USING(PLACE_NO)
+    LEFT JOIN 
+            PLA_PHOTO USING(PLACE_NO)
+	WHERE 
+	    MEM_NO = ?
+	ORDER 
+		 BY
+		 	RECENT_DATE
+	</entry>
+	<entry key="selectTop">
+	SELECT *
+    FROM(
+         SELECT ROWNUM RNUM, A.*
+            FROM(
+                    SELECT 	    
+                                P.*,
+                                ( SELECT 
+                                        COUNT(*) 
+                                    FROM 
+                                        WISH
+                                    JOIN 
+                                        PLACE USING(PLACE_NO)
+                                    WHERE 
+                                        PLACE_NO = P.PLACE_NO) WISHCOUNT,
+                                (SELECT 
+                                       ROUND(AVG(REVIEW_COUNT))
+                                     FROM 
+                                          REVIEW
+                                     WHERE 
+                                          PLACE_NO = P.PLACE_NO) GRADE,
+                                (SELECT 
+                                       COUNT(*) 
+                                     FROM 
+                                          REVIEW
+                                     WHERE 
+                                          PLACE_NO = P.PLACE_NO) REVIEWCOUNT
+                     FROM 
+                            (SELECT 
+                                    PLACE_NO,
+                                    SUBSTR(PLACE_ADDRESS, 1, 2) PLACE_ADDRESS,
+                                    PLACE_NAME,
+                                    FILE_PATH || '/' || CHANGE_NAME TITLEIMG,
+                                    PLACE_TYPE
+                                FROM 
+                                    PLACE
+                                LEFT JOIN 
+                                         PLA_PHOTO USING(PLACE_NO)
+                                WHERE 
+                                    PLACE_STATUS = 'Y' 
+                                        ) P
+                    ORDER BY  WISHCOUNT DESC
+                    
+            ) A )
+   		WHERE RNUM BETWEEN 1 AND 9
+	</entry>
+	
+	<entry key="recentSelect">
+	SELECT 
+			COUNT(*)
+	FROM 
+		RECENT
+	WHERE 
+		PLACE_NO = ?
+	AND 
+		MEM_NO = ?
+	
+	</entry>
+	<entry key="recentInsert">
+	INSERT 
+	    INTO 
+	        RECENT 
+	             (
+	             PLACE_NO, 
+	             MEM_NO, 
+	             RECENT_DATE
+	             ) 
+	VALUES 
+	        (?, 
+	         ?, 
+	        SYSDATE)
+	</entry>
+	<entry key="recentUpdate">
+	UPDATE 
+			RECENT 
+	SET 
+		RECENT_DATE = SYSDATE 
+	WHERE 
+		PLACE_NO = ?
+	AND 
+		 MEM_NO = ? 
+	</entry>
+	<entry key="recentDelete">
+	DELETE
+	FROM
+			RECENT 
+	WHERE 
+		PLACE_NO = ?
+	AND 
+		 MEM_NO = ? 
+	</entry>
+	
+<!-- 혜진 검색 끝 -->
+<!-- 유경 기능 시작 -->
+	<entry key = "placeAllList">
+      SELECT
+            PLACE_NO,
+            PLACE_NAME,
+            PLACE_TYPE,
+            PLACE_ADDRESS,
+            PLACE_PHONE,
+            PLACE_KIND,
+            PLACE_TIME,
+            PLACE_DAYOFF,
+            PLACE_PARKING,
+            PLACE_INFO,
+            PLACE_VIEWS,
+            PLACE_STATUS
+        FROM 
+             PLACE P
+     ORDER BY 
+             PLACE_NO DESC
+       
+   </entry>
+   
+	<entry key = "placeSelectList">
+      SELECT
+            PLACE_NO,
+            PLACE_NAME,
+            PLACE_TYPE,
+            PLACE_ADDRESS,
+            PLACE_PHONE,
+            PLACE_KIND,
+            PLACE_TIME,
+            PLACE_DAYOFF,
+            PLACE_PARKING,
+            PLACE_INFO,
+            PLACE_VIEWS,
+            PLACE_STATUS
+        FROM 
+            PLACE P
+       WHERE 
+            PLACE_STATUS IN (?) 
+            
+    ORDER BY 
+            PLACE_NO DESC   
+   </entry>
+	
+	<entry key = "placeSearchList">
+		SELECT
+			   PLACE_NO,
+			   PLACE_NAME,
+			   PLACE_ADDRESS,
+			   PLACE_TYPE,
+			   PLACE_PHONE,
+			   PLACE_KIND,
+			   PLACE_TIME,
+			   PLACE_DAYOFF,
+			   PLACE_PARKING,
+			   PLACE_INFO,
+			   PLACE_VIEWS,
+			   PLACE_STATUS
+		  FROM 
+		       PLACE
+         WHERE 
+               PLACE_NAME LIKE '%'||?||'%'
+         ORDER 
+            BY 
+               PLACE_NO DESC	
+	</entry>
+	
+	<entry key="placeSelect">
+		SELECT
+			   PLACE_NO,
+			   PLACE_NAME,
+			   PLACE_TYPE,
+			   PLACE_ADDRESS,
+			   PLACE_PHONE,
+			   PLACE_KIND,
+			   PLACE_TIME,
+			   PLACE_DAYOFF,
+			   PLACE_PARKING,
+			   PLACE_INFO,
+			   PLACE_VIEWS,
+			   PLACE_STATUS
+		  FROM 
+		       PLACE
+		 WHERE 
+		       PLACE_NO = ?
+	</entry>
+	<entry key="placeMenuSelect">
+		SELECT
+			   PLACE_NO,
+			   MENU_NAME,
+               PRICE,
+               MENU_TYPE
+		  FROM 
+		       PLA_MENU
+		 WHERE 
+		       PLACE_NO = ?
+	</entry>
+	<entry key="placePhotoSelect">
+		 SELECT
+		 		PLACE_PHOTO_NO,
+		        ORIGIN_NAME,
+                CHANGE_NAME,
+                FILE_PATH,
+                STATUS
+           FROM
+	            PLA_PHOTO
+		  WHERE
+		        STATUS = 'N'      
+		    AND
+		        PLACE_NO = ?
+	</entry>
+	
+	<entry key="placeInsert">
+		INSERT 
+		  INTO 
+		  PLACE
+		       (
+		        PLACE_NO,
+		        PLACE_NAME,
+		        PLACE_TYPE,
+		        PLACE_ADDRESS,
+		        PLACE_PHONE,
+		        PLACE_KIND,
+		        PLACE_TIME,
+		        PLACE_DAYOFF,
+		        PLACE_PARKING,
+		        PLACE_INFO,
+		        PLACE_STATUS
+		       ) 
+		VALUES
+		      (
+		      SEQ_PNO.NEXTVAL,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      ?,
+		      'Y'
+		      )
+	</entry>
+	
+	<entry key="placeMenuInsert">
+		INSERT 
+		  INTO 
+	  		  PLA_MENU
+		       (
+		        PLACE_NO,
+		        MENU_NAME,
+                PRICE,
+                MENU_TYPE
+		       ) 
+		VALUES
+		      (
+		      SEQ_PNO.CURRVAL,
+		      ?,
+		      ?,
+		      ? 
+		      )
+	</entry>
+	<entry key="placePhotoInsert">
+		INSERT 
+		  INTO 
+	 PLA_PHOTO
+		       (
+                PLACE_PHOTO_NO,
+		        PLACE_NO,
+		        ORIGIN_NAME,
+                CHANGE_NAME,
+                FILE_PATH
+		       ) 
+		VALUES
+		      (
+              SEQ_PPNO.NEXTVAL,
+		      SEQ_PNO.CURRVAL,
+		      ?,
+		      ?,
+		      ?
+		      )
+	</entry>
+
+	<entry key="placeDelete">
+		 UPDATE 
+		 	    PLACE
+		    SET 
+		        PLACE_STATUS = 'D'
+		  WHERE 
+		        PLACE_NO = ?
+	</entry>
+	
+	<entry key="placeMenuDelete">
+		 DELETE 
+		   FROM 
+		        PLA_MENU
+		  WHERE 
+		        PLACE_NO = ?
+	</entry>
+	
+	<entry key="placePhotoDelete">
+		UPDATE
+	           PLA_PHOTO        
+		   SET
+		      STATUS ='Y'
+		 WHERE 
+              PLACE_NO = ?
+	</entry>
+	
+	<entry key="placeUpdate">
+		UPDATE 
+		 	   PLACE
+		   SET
+		       PLACE_NAME = ?,
+		       PLACE_TYPE = ?,
+		       PLACE_ADDRESS = ?,
+		       PLACE_PHONE = ?,
+		       PLACE_KIND = ?,
+		       PLACE_TIME = ?,
+		       PLACE_DAYOFF = ?,
+		       PLACE_PARKING = ?,
+		       PLACE_INFO = ?		        
+		 WHERE 
+		       PLACE_NO = ?
+	</entry>
+	
+	
+	<entry key="placeMenuUpdate">
+		INSERT 
+		  INTO 
+	  PLA_MENU
+		       (
+		        PLACE_NO,
+		        MENU_NAME,
+                PRICE,
+                MENU_TYPE
+		       ) 
+		VALUES
+		      (
+		      ?,
+		      ?,
+		      ?,
+		      ? 
+		      )
+	</entry>
+
+	<entry key="placePhotoUpdate">
+		UPDATE
+	           PLA_PHOTO        
+		   SET
+			   ORIGIN_NAME = ?,
+			   CHANGE_NAME = ?,
+			   FILE_PATH = ?,
+			   UPLOAD_DATE = SYSDATE
+		 WHERE 
+               PLACE_NO = ?
+         
+	</entry>
+	
+	<entry key="originPlacePhotoDelete">
+		UPDATE
+	           PLA_PHOTO        
+		   SET
+			   STATUS = 'Y'
+		 WHERE 
+               PLACE_NO = ?
+         
+	</entry>
+	
+	<entry key="placeConfirm">
+		UPDATE 
+		 	   PLACE
+		   SET
+		       PLACE_STATUS = ?		        
+		 WHERE 
+		       PLACE_NO = ?
+	</entry>
+	<entry key="placeNewPhotoInsert">
+		INSERT 
+		  INTO 
+	 PLA_PHOTO
+		       (
+                PLACE_PHOTO_NO,
+		        PLACE_NO,
+		        ORIGIN_NAME,
+                CHANGE_NAME,
+                FILE_PATH
+		       ) 
+		VALUES
+		      (
+              SEQ_PPNO.NEXTVAL,
+		      ?,
+		      ?,
+		      ?,
+		      ?
+		      )
+	</entry>
+	
+	<entry key="requestList">
+		SELECT 
+		      REQUEST_NO, 
+		      REQUEST_CONTENT, 
+		      REQUEST_DATE,
+		      PLACE_NO,  
+		      P.PLACE_NAME, 
+		      M.MEM_ID
+		  FROM 
+		      REQUEST
+          JOIN 
+		      PLACE P USING (PLACE_NO)
+		  JOIN 
+		      MEMBER M USING (MEM_NO)
+         ORDER 
+            BY 
+               REQUEST_NO ASC
+	</entry>
+	<entry key="requestSelect">	
+		SELECT 
+              REQUEST_NO, 
+		      REQUEST_CONTENT, 
+		      REQUEST_DATE,
+		      P.PLACE_NAME, 
+		      M.MEM_ID 
+		  FROM 
+		      REQUEST R
+		  JOIN 
+		      MEMBER M USING(MEM_NO) 
+		  JOIN 
+		      PLACE P USING(PLACE_NO)
+		 WHERE 
+		      REQUEST_NO = ?
+	</entry>
+	<entry key="requestUpdate">
+	      DELETE     
+	        FROM 
+	            REQUEST
+	       WHERE 
+	            REQUEST_NO = ?
+    </entry>
+<!-- 유경 기능 끝 -->
+<!-- 영준기능시작 -->
+	<entry key="insertPlace">
+	
+	INSERT
+    INTO
+       PLACE
+   
+            (
+         		PLACE_NO,
+         		PLACE_NAME,
+         		PLACE_TYPE,
+         		PLACE_ADDRESS,
+         		PLACE_PHONE,
+         		PLACE_KIND,
+         		PLACE_TIME,
+        		PLACE_DAYOFF,
+         		PLACE_PARKING,
+				PLACE_INFO,
+         		PLACE_STATUS
+            )
+   	VALUES
+            (
+                SEQ_PNO.NEXTVAL,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                ?,
+                'W'
+
+            )
+
+	</entry>
+	<entry key="insertMenu">
+	
+	INSERT
+    INTO
+       PLA_MENU
+   
+            (
+				PLACE_NO,
+				MENU_NAME,
+				PRICE,
+				MENU_TYPE	         	
+            )
+   	VALUES
+            (
+            	SEQ_PNO.CURRVAL,
+            	?,
+            	?,
+            	?
+            	
+              
+            )
+              
+
+	</entry>
+	
+	<entry key="insertPlacePhoto">
+	INSERT
+	INTO
+		PLA_PHOTO
+		
+			(
+				PLACE_PHOTO_NO,
+				PLACE_NO,
+				ORIGIN_NAME,
+				CHANGE_NAME,
+				FILE_PATH
+			)
+	VALUES
+			(
+				SEQ_PPNO.NEXTVAL,
+				SEQ_PNO.CURRVAL,
+				?,
+				?,
+				?
+			)
+	 </entry>
+
+
+	<entry key="selectWish">
+		 SELECT
+	            A.PLACE_NO,
+	            PLACE_NAME,
+	            CHANGE_NAME,
+	            FILE_PATH
+		              
+		       FROM 
+		       		WISH A
+		       LEFT JOIN 
+		       			PLACE B ON (A.PLACE_NO = B.PLACE_NO)
+		       LEFT JOIN
+		               PLA_PHOTO C ON( B.PLACE_NO = C.PLACE_NO)
+		      WHERE 
+		           MEM_NO = ?  
+	 </entry>
+
+
+	<entry key="deleteWish">
+	DELETE
+	
+        FROM 
+        	WISH
+        
+    WHERE MEM_NO = ?
+    
+    AND
+    
+     PLACE_NO = ?
+
+
+	 </entry>
+
+   <entry key ="selectWishListCount">
+      SELECT 
+            COUNT(*)
+        FROM 
+             WISH
+        WHERE MEM_NO = ?
+   </entry>
+<!-- 영준기능끝 -->
+	<!-- 강매란 시작  -->
+	<entry key="reviewInsert">
+		INSERT 
+		  INTO
+		       REVIEW
+		       (
+		       REVIEW_NO,
+		       MEM_NO,
+		       PLACE_NO,
+		       REVIEW_COUNT,
+		       REVIEW_MENU_TYPE,
+		       REVIEW_CONTENT
+		       )
+		VALUES
+		       (
+		       SEQ_RNO.NEXTVAL,
+		       ?,
+		       ?,
+		       ?,
+		       ?,
+		       ?
+		       )
+			   	
+	</entry>
+	
+	<entry key="tagsInsert">
+		INSERT
+		  INTO
+		       TAG
+		VALUES
+		       (
+		       SEQ_TAGNO.NEXTVAL,
+		       ?,
+		       SEQ_RNO.CURRVAL
+		       )
+	</entry>
+	
+	<entry key="reviewPhotoInsert">
+		INSERT
+		  INTO
+		       REVIEW_PHOTO
+		       (
+		       REVIEW_PHOTO_NO,
+		       REVIEW_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH
+		       )
+		VALUES
+		       (
+		       SEQ_TAGNO.NEXTVAL,
+		       SEQ_RNO.CURRVAL,
+		       ?,
+		       ?,
+		       ?
+		       )
+	
+	</entry>
+	
+	
+	<entry key="requestInsert">
+		INSERT 
+		  INTO
+		       REQUEST
+		       (
+		       REQUEST_NO,
+		       REQUEST_CONTENT,
+		       PLACE_NO,
+		       MEM_NO
+		       )
+		VALUES
+		       (
+		       SEQ_REQNO.NEXTVAL,
+		       ?,
+		       ?,
+		       ?
+		       )
+			   	
+	</entry>
+	
+	
+	<entry key="photoListSelect">
+		SELECT 
+		       P.PLACE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH,
+		       UPLOAD_DATE
+		  FROM
+		       REVIEW_PHOTO 
+		  JOIN 
+		       REVIEW P USING(REVIEW_NO)
+		 WHERE 
+		       PLACE_NO = ?
+		UNION         
+		SELECT
+		       PLACE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH,
+		       UPLOAD_DATE
+		  FROM
+		       PLA_PHOTO
+		  JOIN 
+		       PLACE USING(PLACE_NO)
+		 WHERE 
+		       PLACE_NO = ?
+		 ORDER
+		    BY 
+		       UPLOAD_DATE DESC
+	</entry>
+	
+	<entry key="placeSelectPhoto">
+		SELECT 
+               PLACE_NO,
+		       REVIEW_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH,
+		       UPLOAD_DATE
+		  FROM
+		       REVIEW_PHOTO 
+		  JOIN 
+		       REVIEW USING(REVIEW_NO)
+		 WHERE 
+		       PLACE_NO = ?
+		 ORDER
+		    BY 
+		       UPLOAD_DATE DESC
+
+	</entry>
+
+
+	<entry key="placeIncreaseCount">
+		UPDATE 
+		        PLACE
+		   SET 
+		        PLACE_VIEWS = PLACE_VIEWS + 1
+		 WHERE
+		        PLACE_NO = ?
+		   AND        
+		        PLACE_STATUS = 'Y'
+	
+	</entry>
+	
+	<entry key="placeSelectDetail">
+		SELECT 
+			   PLACE_NO, 
+			   PLACE_NAME, 
+			   PLACE_TYPE, 
+			   PLACE_ADDRESS, 
+			   PLACE_PHONE,
+			   PLACE_KIND,
+			   PLACE_TIME,
+			   PLACE_DAYOFF,
+			   PLACE_PARKING,
+			   PLACE_INFO,
+			   PLACE_VIEWS,
+			   (SELECT COUNT(*)
+       			  FROM REVIEW
+       			 WHERE PLACE_NO = ?) "SUM_REVIEW",
+                (SELECT SUM(REVIEW_COUNT)
+                  FROM REVIEW
+                  WHERE PLACE_NO= ?) "SUM_COUNT",
+               (SELECT COUNT(*) 
+                 FROM WISH
+                 WHERE PLACE_NO = ?) "PLACE_WISH"
+  		   FROM PLACE
+ 		  WHERE PLACE_NO = ?
+ 		    AND PLACE_STATUS = 'Y'
+	</entry>
+
+	     <!-- 리뷰  select  -->
+	<entry key="placeSelectReview">
+		 SELECT 
+		        PLACE_NO,
+		        REVIEW_NO, 
+		        MEM_NO, 
+		        MEM_NICKNAME, 
+		        REVIEW_COUNT, 
+		        REVIEW_MENU_TYPE, 
+		        REVIEW_CONTENT, 
+		        REVIEW_CREATE_DATE, 
+		        MEM_PROFILE_REVISE, 
+		        MEM_PROFILE_SAVEPATH
+		  FROM 
+		        REVIEW 
+		  JOIN MEMBER USING(MEM_NO)
+		 WHERE 
+		       PLACE_NO = ?
+		   AND 
+		       REVIEW_DELETED = 'N'
+		 ORDER
+		    BY REVIEW_CREATE_DATE DESC
+
+	</entry>
+	
+	<entry key="placeSelectReviewTags">
+		SELECT PLACE_NO, REVIEW_NO, TAG_CONTENT
+		  FROM TAG
+		  JOIN REVIEW USING(REVIEW_NO) 
+		 WHERE PLACE_NO = ?
+		   AND REVIEW_NO = ?
+	</entry>
+
+	<entry key="placeSelectReviewPhoto">
+		SELECT REVIEW_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
+		  FROM REVIEW_PHOTO 
+		 WHERE REVIEW_NO = ?
+		 ORDER
+		    BY UPLOAD_DATE DESC
+	</entry>
+
+	<!--              강매란 추가                                 -->
+
+	<entry key="placeReviewLikeSelect">
+		SELECT 
+		       MEM_NO, REVIEW_NO
+	      FROM 
+	           REVIEW_LIKE
+	     WHERE 
+	           REVIEW_NO IN (
+	                         SELECT 
+	                                REVIEW_NO
+	                           FROM 
+	                                REVIEW
+	                          WHERE 
+	                                PLACE_NO = ? 
+                             )
+	       AND 
+	           MEM_NO = ?
+	</entry>
+
+
+	<entry key="placeInsertWish">
+		INSERT 
+		  INTO 
+		       WISH
+		       (
+		       MEM_NO,
+		       PLACE_NO
+		       )
+		VALUES
+		       (
+		       ?,
+		       ?
+			   )
+	</entry>
+	
+	<entry key="placeWishCount">
+		SELECT 
+		       COUNT(*) "PLACE_WISH"
+		  FROM 
+		       WISH
+         WHERE 
+               PLACE_NO = ?
+	</entry>
+	
+	<entry key="selectReviewCount">
+	 SELECT 
+	 		REVIEW_NO, COUNT(*) "LIKE_RE_COUNT"
+	   FROM 
+	        ( 
+	         SELECT REVIEW_NO
+	         FROM REVIEW
+	         JOIN REVIEW_LIKE USING(REVIEW_NO)
+	  		 WHERE PLACE_NO = ?
+	  		)
+	  GROUP 
+	     BY 
+	         REVIEW_NO
+	</entry>
+	
+	<entry key="likeReviewInsert">
+		INSERT 
+		  INTO 
+		       REVIEW_LIKE
+		       (
+		       MEM_NO,
+		       REVIEW_NO
+		       )
+		VALUES
+		       (
+		       ?,
+		       ?
+			   )
+	
+	</entry>
+	
+	<entry key="likeReviewDelete"> 
+		DELETE
+	      FROM 
+	           REVIEW_LIKE   
+	     WHERE 
+	           MEM_NO = ?
+	       AND 
+	           REVIEW_NO = ?
+	</entry>
+	
+	<entry key="recountReviewCount">
+		 SELECT 
+				COUNT(*)"RE_RECOUNT"
+	       FROM 
+	            REVIEW_LIKE
+	      WHERE 
+	            REVIEW_NO = ?
+	</entry>
+	<!-- 강매란 끝  -->
+	
+	 <entry key ="selectWishListCount">
+      SELECT 
+            COUNT(*)
+        FROM 
+             REVIEW
+        WHERE MEM_NO = ?
+   </entry>
+
+</properties>

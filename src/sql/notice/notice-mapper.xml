@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+
+<properties>
+	<entry key="selectListCount">
+	SELECT 
+		COUNT(*)
+	FROM 
+		QNA
+	</entry>
+	<entry key="selectCsList">
+ SELECT 
+        	* 
+	FROM (
+	        SELECT  
+	                ROWNUM RNUM, Q.*
+	        FROM(
+	                SELECT 
+	                        QNA_NO, 
+	                        IS_LOCKED, 
+	                        QNA_CATEGORY, 
+	                        QNA_TITLE, 
+	                        QNA_WRITER, 
+	                        QNA_DATE, 
+	                        QNA_Q, 
+	                        QNA_A, 
+	                        ANS_YN,
+	                        ANS_DATE,
+	                        QNA_PWD,
+	                        QNA_EMAIL
+	                FROM 
+	                    QNA
+	                ORDER 
+	                    BY 
+	                       QNA_DATE DESC )Q
+	                       )A
+	WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
+	<entry key="insertCs">
+     INSERT 
+        INTO 
+            QNA
+            (
+            QNA_NO,
+            QNA_CATEGORY,
+            QNA_TITLE,
+            QNA_WRITER,
+            QNA_DATE,
+            QNA_Q,
+            ANS_YN,
+            IS_LOCKED,
+            QNA_PWD,
+            QNA_EMAIL
+            )
+    VALUES
+            (
+            SEQ_QNO.NEXTVAL,
+            ?,
+            ?,
+            ?,
+            SYSDATE,
+            ?,
+            'N',
+            NVL(?, 'N'),
+            ?,
+            ?
+            ) 
+	
+	
+	</entry>
+		<entry key="selectNotice">
+		SELECT 
+		        NOTICE_NO,
+		        NOTICE_TITLE,
+		        NOTICE_CONT,
+                NOTICE_DATE,
+                MEM_NICKNAME
+		  FROM
+		        NOTICE
+		  JOIN
+		        MEMBER USING(MEM_NO)
+		 WHERE 
+		        NOTICE_NO = ?
+	</entry>
+
+	<entry key="selectNoticeListCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       NOTICE
+	</entry>
+	
+	<entry key="selectNoticeList">
+		SELECT *
+		FROM 
+		    (SELECT 
+		           ROWNUM RNUM, 
+		           A.*
+		      FROM 
+		           (SELECT
+		                   NOTICE_NO,
+		                   NOTICE_TITLE,
+		                   MEM_NICKNAME,
+		                   NOTICE_DATE                  
+		              FROM 
+		                   NOTICE
+		              JOIN     
+		                   MEMBER USING(MEM_NO)
+		             ORDER 
+		                BY 
+		                   NOTICE_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="deleteNotice">
+		DELETE
+		       NOTICE
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="insertNotice">
+		INSERT 
+		  INTO 
+		       NOTICE 
+		       (
+		       NOTICE_NO,
+		       NOTICE_TITLE,
+		       NOTICE_CONT,
+		       MEM_NO,
+		       NOTICE_DATE
+		       )
+		VALUES 
+		       (
+		       SEQ_NNO.NEXTVAL,
+		       ?,
+		       ?,
+		       ?,
+		       SYSDATE
+		       )
+	</entry>
+	
+	<entry key="selectByNoticeNo">
+		SELECT
+		       NOTICE_NO,
+		       NOTICE_TITLE,
+		       NOTICE_CONT,
+		       MEM_NICKNAME,
+		       NOTICE_DATE
+		  FROM 
+		       NOTICE
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	
+	<entry key="updateNotice">
+		UPDATE
+		       NOTICE
+		   SET
+		       NOTICE_TITLE = ?,
+		       NOTICE_CONT = ?
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+</properties>

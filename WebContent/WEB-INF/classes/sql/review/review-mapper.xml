@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectReviewListAllCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       REVIEW
+	</entry>
+	<entry key="selectReviewListAll">
+		SELECT *
+		FROM 
+		    (SELECT 
+		           ROWNUM RNUM, 
+		           A.*
+		      FROM 
+		           (SELECT
+		                   REVIEW_NO,
+		                   MEM_NO,
+		                   MEM_NICKNAME,
+		                   PLACE_NO,
+		                   PLACE_NAME,
+		                   REVIEW_COUNT,
+		                   REVIEW_CREATE_DATE                
+		              FROM 
+		                   REVIEW
+		              JOIN     
+		                   MEMBER USING(MEM_NO)
+		              JOIN
+		                   PLACE USING(PLACE_NO)
+		             ORDER 
+		                BY 
+		                   REVIEW_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectReviewListCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       REVIEW
+		 WHERE
+		       REVIEW_DELETE = ?
+	</entry>
+	<entry key="selectReviewList">
+		SELECT *
+		FROM 
+		    (SELECT 
+		           ROWNUM RNUM, 
+		           A.*
+		      FROM 
+		           (SELECT
+		                   REVIEW_NO,
+		                   MEM_NO,
+		                   MEM_NICKNAME,
+		                   PLACE_NO,
+		                   PLACE_NAME,
+		                   REVIEW_COUNT,
+		                   REVIEW_CREATE_DATE                
+		              FROM 
+		                   REVIEW
+		              JOIN     
+		                   MEMBER USING(MEM_NO)
+		              JOIN
+		                   PLACE USING(PLACE_NO)
+		             WHERE
+		                   REVIEW_DELETE = ?
+		             ORDER 
+		                BY 
+		                   REVIEW_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectReviewByReviewNo">
+	SELECT
+	       REVIEW_NO,
+	       MEM_NO,
+	       MEM_NICKNAME,
+	       PLACE_NO,
+	       PLACE_NAME,
+	       REVIEW_COUNT,
+	       REVIEW_MENU_TYPE,
+	       REVIEW_CONTENT,
+	       REVIEW_CREATE_DATE
+	  FROM
+	       REVIEW
+	  JOIN
+	       MEMBER USING(MEM_NO)
+	  JOIN
+	       PLACE USING(PLACE_NO)
+	 WHERE
+	       REVIEW_NO = ?
+	</entry>
+ 	<entry key="searchReviewByKeywordCount">
+ 		SELECT
+		       COUNT(*)
+		  FROM 
+		       REVIEW
+		 WHERE
+		       REVIEW_CONTENT LIKE '%' || ? || '%'
+ 	</entry>
+ 	<entry key="searchReviewByKeyword">
+		SELECT *
+		FROM 
+		    (SELECT 
+		           ROWNUM RNUM, 
+		           A.*
+		      FROM 
+		           (SELECT
+                           REVIEW_NO,
+                           MEM_NO,
+                           MEM_NICKNAME,
+                           PLACE_NO,
+                           PLACE_NAME,
+                           REVIEW_COUNT,
+                           REVIEW_MENU_TYPE,
+                           REVIEW_CONTENT,
+                           REVIEW_CREATE_DATE              
+		              FROM 
+		                   REVIEW
+		              JOIN     
+		                   MEMBER USING(MEM_NO)
+		              JOIN
+		                   PLACE USING(PLACE_NO)
+                     WHERE
+                           REVIEW_CONTENT LIKE '%' || ? || '%'
+		             ORDER 
+		                BY 
+		                   REVIEW_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+ 	</entry>
+ 	
+ 	<entry key="selectReview">
+
+SELECT *
+        FROM 
+             (SELECT 
+                     ROWNUM RNUM, 
+                     A.*
+                FROM 
+                     (SELECT
+                      R.REVIEW_NO,
+                      P.PLACE_NO,
+                        PLACE_NAME,
+                        REVIEW_CONTENT,
+                        REVIEW_CREATE_DATE,
+                        CHANGE_NAME,
+                        FILE_PATH
+                           
+                        FROM 
+                             REVIEW R
+                        LEFT  JOIN
+                       PLACE P ON (R.PLACE_NO = P.PLACE_NO)
+                      
+                       LEFT JOIN
+                            PLA_PHOTO PL ON (PL.PLACE_NO = R.PLACE_NO)
+                       WHERE 
+                              REVIEW_DELETED = 'N' AND MEM_NO = ?
+                       ORDER 
+                          BY 
+                             MEM_NO ASC) A)
+                        WHERE 
+                            RNUM BETWEEN ? AND ?
+                            
+
+</entry>
+
+<entry key="deleteReview">
+
+ UPDATE
+	    REVIEW
+  SET
+        REVIEW_DELETED = 'Y'
+  WHERE 
+	    REVIEW_NO = ?
+
+</entry>
+
+<entry key="deleteReviewPhoto">
+
+UPDATE
+    REVIEW_PHOTO
+SET
+    STATUS = 'Y'
+WHERE REVIEW_NO = ?
+
+
+
+</entry>
+
+
+<entry key="selectTag">
+
+SELECT    
+		TAG_NO,
+		TAG_CONTENT,
+		REVIEW_NO 
+
+FROM
+ 	TAG
+ WHERE REVIEW_NO IN 
+ 	(
+ 	  SELECT 
+      REVIEW_NO
+  FROM
+       REVIEW
+ WHERE
+      MEM_NO = ?)
+
+
+</entry>
+
+<entry key="selectMemReviewCount">
+SELECT
+    COUNT(*)
+FROM 
+    REVIEW
+WHERE 
+	MEM_NO = ? 
+AND 
+	REVIEW_DELETED = 'N'
+</entry>
+ <entry key="deleteTag">
+
+DELETE
+    TAG
+WHERE 
+   REVIEW_NO = ?
+
+</entry>
+</properties>
+
+

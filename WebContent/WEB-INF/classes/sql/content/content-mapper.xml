@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="selectRecommList">
+SELECT A.*
+FROM
+     (SELECT 
+            ROWNUM RNUM, C.*
+     FROM
+            (SELECT 
+                    CONT_NO, 
+                    CONT_CATEGORY, 
+                    CONT_TITLE, 
+                    CONT_INFO, 
+                    CONT_LINK, 
+                    CONT_IMG_SOURCE, 
+                    MENU_TYPE
+            FROM 
+                    CONTENT
+           WHERE
+                CONT_TITLE LIKE ?
+            OR 
+                CONT_INFO LIKE ?
+            OR 
+                MENU_TYPE LIKE ?
+            ORDER 
+                BY 
+                    CONT_NO DESC)C )A
+WHERE RNUM BETWEEN 1 AND 3
+</entry>
+	<entry key="selectContentListCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       CONTENT
+	</entry>
+	<entry key="selectContentList">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       CONT_NO,
+		                       CONT_CATEGORY,
+		                       CONT_TITLE,
+		                       CONT_INFO,
+		                       CONT_SOURCE,
+		                       CONT_LINK,
+		                       CONT_IMG_SOURCE,
+		                       MENU_TYPE      
+		                  FROM 
+		                       CONTENT
+		                 ORDER 
+		                    BY 
+		                       CONT_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="insertContent">
+		INSERT
+		  INTO
+		       CONTENT
+		       (
+		       CONT_NO,
+		       CONT_CATEGORY,
+		       CONT_TITLE,
+		       CONT_INFO,
+		       CONT_SOURCE,
+		       CONT_LINK,
+		       CONT_IMG_SOURCE,
+		       MENU_TYPE
+		       )
+		VALUES
+		       (
+		       SEQ_CNO.NEXTVAL,
+		       ?,
+		       ?,
+		       ?,
+		       ?,
+		       ?,
+		       ?,
+		       ?
+		       )
+	</entry>
+	<entry key="selectByContNo">
+		SELECT
+		       CONT_NO,
+		       CONT_CATEGORY,
+		       CONT_TITLE,
+		       CONT_INFO,
+		       CONT_SOURCE,
+		       CONT_LINK,
+		       CONT_IMG_SOURCE,
+		       MENU_TYPE
+		  FROM
+		       CONTENT
+		 WHERE
+		       CONT_NO = ?
+	</entry>
+	<entry key="updateContent">
+		UPDATE
+		       CONTENT
+		   SET 
+		       CONT_CATEGORY = ?,
+		       CONT_TITLE = ?,
+		       CONT_INFO = ?,
+		       CONT_SOURCE = ?,
+		       CONT_LINK = ?,
+		       CONT_IMG_SOURCE = ?,
+		       MENU_TYPE = ?
+		 WHERE
+		       CONT_NO = ?
+	</entry>
+	<entry key="selectContentListCountByCategory">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       CONTENT
+		 WHERE
+		       CONT_CATEGORY = ?
+	</entry>
+	<entry key="selectContentListByCategory">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       CONT_NO,
+		                       CONT_CATEGORY,
+		                       SUBSTR(CONT_TITLE, 0, 22)||'..' "CONT_TITLE",
+		                       SUBSTR(CONT_INFO, 0, 33) ||'..' "CONT_INFO",
+		                       CONT_SOURCE,
+		                       CONT_LINK,
+		                       CONT_IMG_SOURCE,
+		                       MENU_TYPE      
+		                  FROM 
+		                       CONTENT
+                         WHERE
+                               CONT_CATEGORY = ?
+		                 ORDER 
+		                    BY 
+		                       CONT_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="insertContentLike">
+	INSERT
+	  INTO
+	       CONT_LIKE
+	       (
+	       MEM_NO,
+	       CONT_NO
+	       )
+	VALUES
+	       (
+	       ?,
+	       ?
+	       )
+	</entry>
+	<entry key="deleteContentLike">
+		DELETE
+		       CONT_LIKE
+		 WHERE
+		       MEM_NO = ?
+		   AND
+		       CONT_NO = ?
+	</entry>
+	<entry key="selectContentLikeList">
+		SELECT 
+		       CONT_NO
+		  FROM 
+		       CONT_LIKE
+		 WHERE
+		       MEM_NO = ?
+	</entry>
+		<entry key="deleteContentAllLike">
+		DELETE
+		  FROM       
+		       CONT_LIKE
+		 WHERE
+		       CONT_NO = ?
+	</entry>
+	<entry key="deleteContent">
+		DELETE
+		  FROM       
+		       CONTENT
+		 WHERE
+		       CONT_NO = ?
+	</entry>
+</properties>

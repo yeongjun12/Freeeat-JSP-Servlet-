@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="insertReport">
+	INSERT
+	  INTO
+	        REPORT
+	        (
+	        REPORT_NO,
+	        REPORT_MEM_NO,
+	        BOARD_NO,
+	        REPORT_REASON,
+	        REPORT_DATE,
+	        REPORT_CODE,
+	        REPORT_PLUS
+	        )
+	VALUES
+	        (
+	        SEQ_REPNO.NEXTVAL,
+	        ?,
+	        ?,
+	        ?,
+	        SYSDATE,
+	        ?,
+	        ?
+	        )
+	</entry>
+
+	<entry key="reportList">
+		SELECT 
+			   REPORT_NO,
+			   M.MEM_ID,
+			   BOARD_NO,
+			   REPORT_REASON,
+			   REPORT_DATE,
+			   REPORT_CODE,
+			   REPORT_RESULT
+		  FROM 
+		       REPORT R
+		  JOIN 
+		       MEMBER M ON M.MEM_NO = R.REPORT_MEM_NO
+		  ORDER 
+		     BY 
+		       REPORT_NO ASC
+	</entry>
+	<entry key="reportWaitList">
+		SELECT 
+			   REPORT_NO,
+			   M.MEM_ID,
+			   BOARD_NO,
+			   REPORT_REASON,
+			   REPORT_DATE,
+			   REPORT_CODE,
+			   REPORT_RESULT
+		  FROM 
+		       REPORT R
+		  JOIN 
+		       MEMBER M ON M.MEM_NO = R.REPORT_MEM_NO
+		 WHERE   
+		 	   REPORT_RESULT IS NULL
+		 ORDER 
+		     BY 
+		       REPORT_NO ASC 
+	</entry>
+	<entry key="reportFinishList">
+		SELECT 
+			   REPORT_NO,
+			   M.MEM_ID,
+			   BOARD_NO,
+			   REPORT_REASON,
+			   REPORT_DATE,
+			   REPORT_CODE,
+			   REPORT_RESULT
+		  FROM 
+		       REPORT R
+		  JOIN 
+		       MEMBER M ON M.MEM_NO = R.REPORT_MEM_NO
+		 WHERE   
+		 	   REPORT_RESULT IS NOT NULL
+		 ORDER 
+		     BY 
+		       REPORT_NO ASC 
+	</entry>
+	
+	<entry key ="reportSelect">
+		SELECT 
+			  REPORT_NO,
+			  M.MEM_ID,
+			  BOARD_NO,
+			  REPORT_REASON,
+			  REPORT_DATE,
+			  REPORT_CODE,
+			  REPORT_RESULT,
+			  REPORT_PLUS
+		  FROM 
+		      REPORT R
+		  JOIN 
+		      MEMBER M ON M.MEM_NO = R.REPORT_MEM_NO
+		 WHERE 
+		      REPORT_NO = ?
+	</entry>
+	
+	<entry key ="feedSelect">
+		SELECT 
+			  FEED_NO,
+			  M.MEM_ID,
+			  FEED_TITLE,
+			  FEED_TEXT,
+			  FEED_TAG,
+			  FEED_DELETED,
+			  FEED_DATE,
+			  ORIGIN_NAME,
+			  CHANGE_NAME,
+			  FILE_PATH
+		  FROM 
+		      FEED 
+		  JOIN 
+		      MEMBER M USING(MEM_NO)
+		 WHERE 
+		      FEED_NO = ?
+	</entry>
+	
+	<entry key="replySelect">
+		SELECT 
+			  REPLY_NO,
+			  REPLY_CONTENT,
+			  REPLY_DELETED,
+			  FEED_NO,
+			  M.MEM_ID
+		  FROM 
+		      REPLY 
+		  JOIN 
+		      MEMBER M USING(MEM_NO)
+		 WHERE 
+		      REPLY_NO = ?
+	</entry>
+	
+	<entry key="reviewSelect">
+		SELECT 
+			  REVIEW_NO,
+              M.MEM_ID,
+              PLACE_NO,
+              REVIEW_COUNT,
+              REVIEW_MENU_TYPE,
+              REVIEW_CONTENT,
+              REVIEW_CREATE_DATE,
+              REVIEW_DELETED,
+              P.PLACE_NAME
+		  FROM 
+		      REVIEW 
+		  JOIN 
+		      MEMBER M USING(MEM_NO)
+         JOIN 
+         	  PLACE P USING(PLACE_NO)
+		 WHERE 
+		      REVIEW_NO = ?
+	</entry>
+	
+	<entry key="reviewPhotoSelect">
+		SELECT 
+              REVIEW_PHOTO_NO,
+              ORIGIN_NAME,
+              CHANGE_NAME,
+              FILE_PATH
+		  FROM 
+		      REVIEW_PHOTO
+         WHERE
+		      REVIEW_NO = ?
+	</entry>
+	
+	<entry key = "reportResultUpdate">
+		UPDATE 
+		      REPORT
+		   SET 
+		      REPORT_RESULT = 'D'
+		 WHERE 
+		      REPORT_NO = ?
+	</entry>
+	
+	<entry key ="reportCancel">
+		UPDATE 
+		       REPORT
+		   SET 
+		       REPORT_RESULT = 'U'
+		 WHERE 
+		       REPORT_NO = ?
+	</entry>
+		
+	<entry key ="reportConfirm">
+		UPDATE 
+		       REPORT
+		   SET 
+		       REPORT_RESULT = 'D'
+		 WHERE 
+		       REPORT_NO = ?
+	</entry>
+	
+	<entry key ="reviewPhotoDelete">
+		UPDATE 
+		       REVIEW_PHOTO
+		   SET 
+		       STATUS = 'Y'
+		 WHERE 
+		       REVIEW_NO = ?
+	</entry>	
+	
+	<entry key="tagDelete">
+		DELETE
+		      TAG
+		 WHERE 
+		      REVIEW_NO = ?
+	</entry>
+	
+	<entry key="tagSelect">
+		SELECT
+		      TAG_NO,
+			  TAG_CONTENT,
+		      REVIEW_NO
+		 WHERE 
+		      REVIEW_NO = ?	
+	</entry>
+		      
+	<!-- 매란 -->
+	<entry key="reportInsertMember">
+		SELECT 
+		       MEM_NO, 
+		       R.REVIEW_NO, 
+		       MEM_NICKNAME,
+		       REVIEW_CONTENT
+  		  FROM 
+  		       REVIEW R
+  		  JOIN 
+  		       MEMBER M USING(MEM_NO)
+  		 WHERE 
+  		       REVIEW_NO = ?
+	</entry>
+
+	<entry key="reportReviewInsert">
+		INSERT 
+		  INTO 
+		       REPORT
+		       (
+		       REPORT_NO,
+		       REPORT_MEM_NO,
+		       BOARD_NO,
+		       REPORT_REASON,
+		       REPORT_CODE,
+			   REPORT_PLUS
+		       )
+		VALUES   
+		       (
+		       SEQ_REPNO.NEXTVAL,
+		       ?,
+		       ?,
+		       ?,
+		       '리뷰',
+		       ?
+		       )  
+		       
+	</entry>
+
+
+
+
+
+
+
+
+
+
+
+
+</properties>

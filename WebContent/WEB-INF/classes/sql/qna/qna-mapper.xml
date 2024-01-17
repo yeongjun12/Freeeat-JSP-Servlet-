@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selecQnaListCount">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       QNA
+	</entry>
+	<entry key="selectQnaList">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       QNA_NO,
+		                       QNA_CATEGORY,
+		                       QNA_TITLE,
+		                       QNA_WRITER,
+		                       QNA_DATE,
+		                       ANS_YN,
+		                       ANS_DATE,
+		                       IS_LOCKED
+		                  FROM 
+		                       QNA
+		                 ORDER 
+		                    BY 
+		                       QNA_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectByQnaNo">
+		SELECT 
+		       QNA_NO,
+		       QNA_CATEGORY,
+		       QNA_TITLE,
+		       QNA_WRITER,
+		       QNA_DATE,
+		       QNA_Q,
+		       QNA_A,
+		       ANS_YN,
+		       ANS_DATE,
+		       IS_LOCKED,
+		       QNA_PWD,
+		       QNA_EMAIL
+		  FROM
+		       QNA
+		 WHERE
+		       QNA_NO = ?
+	</entry>
+	<entry key="selectQnaAnswerNListCount">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       QNA
+		 WHERE
+		       ANS_YN = 'N'
+	</entry>
+	<entry key="selectQnaAnswerNList">
+		SELECT *
+		  FROM 
+		       (SELECT 
+		               ROWNUM RNUM, 
+		               A.*
+		          FROM 
+		               (SELECT
+		                       QNA_NO,
+		                       QNA_CATEGORY,
+		                       QNA_TITLE,
+		                       QNA_WRITER,
+		                       QNA_DATE,
+		                       ANS_YN,
+		                       ANS_DATE,
+		                       IS_LOCKED
+		                  FROM 
+		                       QNA
+		                 WHERE
+		                       ANS_YN = 'N'
+		                 ORDER 
+		                    BY 
+		                       QNA_NO DESC) A)
+		  WHERE 
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="deleteQna">
+		DELETE
+		       QNA
+		 WHERE
+		       QNA_NO = ?
+	</entry>
+	<entry key="answerQna">
+		UPDATE
+		       QNA
+		   SET
+		       QNA_A = ?,
+		       ANS_YN = 'Y',
+		       ANS_DATE = SYSDATE
+		 WHERE
+		       QNA_NO = ?
+	</entry>
+</properties>
+
+

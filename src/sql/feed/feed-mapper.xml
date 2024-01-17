@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key ="selectLastFeedCount">
+		SELECT 
+			   COUNT(*)
+		  FROM 
+		       FEED
+	</entry>
+	<entry key="selectFeed">
+		SELECT
+		       FEED_NO,
+		       MEM_NO,
+		       MEM_NICKNAME,
+		       FEED_TITLE,
+		       FEED_TEXT,
+		       FEED_TAG,
+		       FEED_DELETED,
+		       FEED_DATE,
+		       LIKE_COUNT,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH
+		  FROM
+		       FEED
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       FEED_NO = ?
+	</entry>
+	
+	<!-- 인호시작 -->
+	<entry key="insertFeed">
+	INSERT 
+	  INTO
+	        FEED 
+	        (
+	         FEED_NO,
+	         MEM_NO, 
+	         FEED_TITLE,
+	         FEED_TEXT,
+	         FEED_TAG,
+	         FEED_DATE,
+	         ORIGIN_NAME,
+	         CHANGE_NAME,
+	         FILE_PATH
+	         )
+	VALUES
+	        (
+	        SEQ_FNO.NEXTVAL,
+	        ?,
+	        ?,
+	        ?,
+	        ?,
+	        SYSDATE,
+	        ?,
+	        ?,
+	        ?
+	        )
+	</entry>
+
+
+	<entry key="updateFeed">
+	UPDATE
+	        FEED
+	    SET 
+	        FEED_TITLE = ?,
+            FEED_TEXT = ?,
+            FEED_TAG = ?,
+            ORIGIN_NAME = ?,
+            CHANGE_NAME = ?,
+            FILE_PATH = ?
+	  WHERE
+	        FEED_NO = ?
+       AND  
+            FEED_DELETED = 'N'
+	</entry>
+
+
+	<entry key="selectFeedList">
+	
+	SELECT 
+	        FEED_NO,
+	        F.MEM_NO,
+	        FEED_TITLE,
+	        FEED_TEXT,
+	        FEED_TAG,
+	        LIKE_COUNT,
+	        ORIGIN_NAME,
+	        CHANGE_NAME,
+	        FILE_PATH,
+	        MEM_NICKNAME,
+	        ('/Freeeat/'||MEM_PROFILE_SAVEPATH||'/'||MEM_PROFILE_REVISE) UP
+	  FROM
+	        FEED F
+	  LEFT
+	  JOIN  
+	        MEMBER M
+	    ON
+	        (M.MEM_NO = F.MEM_NO)
+	 WHERE
+	        FEED_DELETED = 'N'
+	 ORDER
+	    BY
+	        FEED_NO DESC
+	
+	</entry>
+	
+	
+	<entry key='selectFeedByTagList'>
+	
+	SELECT 
+	        FEED_NO,
+	        F.MEM_NO,
+	        FEED_TITLE,
+	        FEED_TEXT,
+	        FEED_TAG,
+	        LIKE_COUNT,
+	        ORIGIN_NAME,
+	        CHANGE_NAME,
+	        FILE_PATH,
+	        MEM_NICKNAME,
+	        ('/Freeeat/'||MEM_PROFILE_SAVEPATH||'/'||MEM_PROFILE_REVISE) UP
+	  FROM
+	        FEED F
+	  LEFT
+	  JOIN  
+	        MEMBER M
+	    ON
+	        (M.MEM_NO = F.MEM_NO)
+	 WHERE
+	        FEED_DELETED = 'N'
+	   AND
+	   		FEED_TAG LIKE '%'||?||'%'
+	 ORDER
+	    BY
+	        FEED_NO DESC
+	
+	</entry>
+
+
+	<entry key="selectFeedByFollowList">
+   
+	SELECT 
+	        FEED_NO,
+	        F.MEM_NO,
+	        FEED_TITLE,
+	        FEED_TEXT,
+	        FEED_TAG,
+	        LIKE_COUNT,
+	        ORIGIN_NAME,
+	        CHANGE_NAME,
+	        FILE_PATH,
+	        MEM_NICKNAME,
+	        ('/Freeeat/'||MEM_PROFILE_SAVEPATH||'/'||MEM_PROFILE_REVISE) UP
+	  FROM
+	        FEED F
+	  LEFT
+	  JOIN  
+	        MEMBER M
+	    ON
+	        (M.MEM_NO = F.MEM_NO)
+	 WHERE
+	        FEED_DELETED = 'N'
+	   AND
+            M.MEM_NO IN 
+                (
+                SELECT FOLLOWING
+                  FROM FOLLOW
+                 WHERE FOLLOWER = ?
+                 )
+	 ORDER
+	    BY
+	        FEED_NO DESC
+	
+	</entry>
+
+	<entry key="deleteFeed">
+		UPDATE
+		        FEED
+		   SET
+		        FEED_DELETED = 'Y'
+		 WHERE
+		        FEED_NO = ? 
+		   AND 
+		        FEED_DELETED = 'N'
+	
+	</entry>
+	<entry key="insertFeedLike">
+		INSERT
+		  INTO
+		       FEED_LIKE
+		       (
+		       MEM_NO,
+		       FEED_NO
+		       )
+		VALUES
+		       (
+		       ?,
+		       ?
+		       )
+	</entry>
+	
+	<entry key="deleteFeedLike">
+		DELETE
+		       FEED_LIKE
+		 WHERE
+		       MEM_NO = ?
+		   AND
+		       FEED_NO = ?	
+	
+	</entry>
+	<!-- 인호끝 -->
+	<entry key="selectFeedImage">
+
+	SELECT
+	
+	    CHANGE_NAME,
+	    FILE_PATH
+	
+	FROM
+	    FEED
+	WHERE  MEM_NO = ? AND ROWNUM BETWEEN 1 AND 8
+	ORDER BY CHANGE_NAME DESC
+	
+	
+	
+	</entry>
+	
+	<entry key="selectFeedCount">
+	SELECT
+	    
+	   COUNT(*)
+	FROM
+	    FEED
+	WHERE MEM_NO = ?
+	
+	
+	</entry>
+</properties>
+
+
