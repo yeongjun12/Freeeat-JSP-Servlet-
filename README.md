@@ -1,17 +1,16 @@
 🖥️ 프로젝트 소개
-농부들의 자부심 "농부심"
-
-지역 소비자를 위한 농작물 거래 플랫폼 + 지역 농부들을 위한 농사 정보 공유 사이트
+비건이나 다이어트, 체질상의 이유로
+외부에서 음식을 섭취할 때 제한을 받는 사람들이
+밖에서도 자유롭게 식사를 즐겨야 한다는 생각으로
+Free한 Eat을 생각했습니다.
 
 🗓 개발 기간
-22.12.30 - 23.01.25
+22.11.25 ~ 22.12.12
 
-🧑‍🤝‍🧑 팀원
-서지연: 로그인, 로그아웃, 회원가입, 마이페이지(정보수정, 작성글조회, 찜 관리)
-송누리: 농장 전체 리스트(지역별, 키워드 검색), 농장 상세 조회 페이지, 정보 공유 게시판(CRUD), 농장 정보 등록/수정/삭제
-이영준: 프로그램 전체 리스트, 프로그램등록(농부만), 프로그램상세조회(회원 신청), 참여프로그램 조회, 프로그램 후기 게시판///
-김승혜: 농작물 거래 게시판(CRUD), 비밀댓글
-황승필: 파머게시판(CRUD)-내농작물자랑, 질문게시판, 멘토멘티구하기, 농사노하우공유게시판
-이상민: 통합 검색기능 (추천검색어, 게시판 전체검색) , 마이페이지(농부) - 영농일지(CRUD) , 입출금관리(CRUD)
 ⚙️ 개발 환경
-        https://camo.githubusercontent.com/64e3ed535b90fafa087dab829106804d76bd80a40ac55a542a4a51ff5dd440fa/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f48544d4c352d4533344632363f7374796c653d666c6174266c6f676f3d48544d4c35266c6f676f436f6c6f723d7768697465
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+<img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
